@@ -1,35 +1,32 @@
 <template>
     <div>
         <button @click="Btn">click</button>
-        <div>
-            {{ count }}
-        </div>
+        <p>
+            count: {{ getCounter }} 
+        </p>
     </div>
 </template>
 
 <script>
 
 import { ref } from 'vue';
-import store from '../store/index';
 import { computed } from 'vue';
-
-import { useStore } from 'vuex'
+// import { useStore } from 'vuex'
+import store from '@/store';
 
 export default {
     setup() {
-        const s = useStore()
+        // const store = useStore()
+        let count = ref(0);
 
         const getCounter = computed(() => {
-            console.log(store)
-            return s.getters.getCount       
-        }, [store.getters.getCount])
-
-        const count = ref(store.getters.getCount)
-        console.log(count.value);
+            return count  
+        })
 
         const Btn = () => {
+            store.dispatch('increment', store.getters.getCount)
             console.log(store.getters.getCount)
-            store.dispatch('increment')
+            count.value = store.getters.getCount
         }
 
         return {
