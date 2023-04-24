@@ -2,9 +2,11 @@
     <div className="headerWrapper">
         <div className='header'>
             <div className='bigScreen'>
-                <div className='logo'>Logo</div>
+                <router-link to="/">
+                    <h1 className='logo'>Spaceflight News</h1>
+                </router-link>
                 <div className='searchBar'>
-                    <EditPen style="height: 1rem; width: 1rem; position: absolute; left: 0; top: 18%; "/>
+                    <EditPen style="height: 1rem; width: 1rem; position: absolute; left: 0; top: 18%; " />
                     <input />
                 </div>
                 <div className='navLinks'>
@@ -18,13 +20,15 @@
 
             <div className='smallScreen'>
                 <div className='logoMenu'>
-                    <div className='logo'>Logo</div>
+                    <router-link to="/">
+                        <h1 className='logo'>Spaceflight News</h1>
+                    </router-link>
                     <Fold @click="toggleMenu" style="width: 20px; height: 20px; cursor: pointer;" />
                 </div>
 
                 <div v-if="menuOpen" className='navLinks'>
                     <div className='searchBar'>
-                        <EditPen style="height: 1rem; width: 1rem; position: absolute; left: 0; top: 18%;"/>
+                        <EditPen style="height: 1rem; width: 1rem; position: absolute; left: 0; top: 18%;" />
                         <input />
                     </div>
                     <router-link to="/">Home</router-link>
@@ -39,7 +43,7 @@
 </template>
 
 <script>
-import router from '@/router';
+import router from '../router';
 import { ref } from 'vue';
 import { Fold, EditPen } from '@element-plus/icons-vue';
 
@@ -61,7 +65,7 @@ export default {
 
 <style>
 .headerWrapper {
-    padding: 10px 32px;
+    padding: 10px 16px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -125,6 +129,12 @@ export default {
 .logoMenu {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: crimson;
+    font-weight: 800;
 }
 
 @media screen and (max-width: 768px) {
@@ -142,5 +152,4 @@ export default {
         align-items: center;
         padding: 25px 0;
     }
-}
-</style>
+}</style>
