@@ -2,19 +2,25 @@
     <div class="headerWrapper">
         <div class="header">
             <h1>Spaceflight News</h1>
-            <Fold class="menu" />
+            <div class="navBar">
+                <h3>Articles</h3>
+                <p>|</p>
+                <h3>Blogs</h3>
+                <p>|</p>
+                <h3>Reports</h3>
+            </div>
+            <!-- <Fold class="menu" /> -->
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import Fold from '~icons/ep/fold'
+// import Fold from '~icons/ep/fold'
 
 </script>
 
 <style scoped lang="scss">
 .headerWrapper {
-    padding: 1rem;
     width: 100%;
 
     .header {
@@ -27,14 +33,45 @@ import Fold from '~icons/ep/fold'
 
             @media screen and (max-width: 768px) {
                 margin: auto;
+                padding: 1rem 0;
             }
         }
 
-        .menu {
+        .navBar {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+
+            p {
+                color: #FFC50B;
+            }
+
+            h3 {
+                @media screen and (max-width: 768px) {
+                    color: rgb(255, 255, 255);
+                    font-weight: 200;
+                }
+            }
+
             @media screen and (max-width: 768px) {
-                display: none;
+                background-color: rgb(64, 64, 64);
+                padding: 1rem;
+                justify-content: center;
             }
         }
+
+        // .menu {
+        //     @media screen and (min-width: 768px) {
+        //         display: none;
+        //     }
+        // }
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+        }
+    }
+    @media screen and (min-width: 768px) {
+        padding: 1rem;
     }
 }
 </style>

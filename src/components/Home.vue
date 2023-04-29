@@ -45,19 +45,25 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .articlesNblogs {
-    display: flex;
+    display: inline-flex;
 
     .articlesWrapper {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 
         .image {
             margin: 0;
 
             img {
-                height: 300px;
-                width: 300px;
+                height: 250px;
+                width: 250px;
+
+                @media (max-width: 486px) {
+                    height: 100%;
+                    width: 100%;
+                }
             }
+
         }
     }
 
@@ -76,6 +82,10 @@ onMounted(async () => {
                 color: rgb(181, 181, 181);
             }
         }
+    }
+
+    @media (max-width: 486px) {
+        flex-direction: column;
     }
 }
 </style>
