@@ -49,21 +49,38 @@ onMounted(async () => {
 
     .articlesWrapper {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 
         .image {
             margin: 0;
 
             img {
-                height: 250px;
-                width: 250px;
+                height: 350px;
+                width: 350px;
+
+                @media (max-width: 680px) {
+                    height: 300px;
+                    width: 300px;
+                }
+
+                @media (max-width: 600px) {
+                    height: 250px;
+                    width: 250px;
+                }
 
                 @media (max-width: 486px) {
                     height: 100%;
                     width: 100%;
                 }
             }
+        }
 
+        @media (max-width: 680px) {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        @media (max-width: 600px) {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         }
     }
 
