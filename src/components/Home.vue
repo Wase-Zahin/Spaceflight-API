@@ -1,171 +1,69 @@
 <template>
-    <div class="blogsNarticles">
-        <el-carousel class="article_images" :interval="5000">
-            <el-carousel-item v-for="item in articles" :key="item.id">
-                <img class="article_image" :src="item.image_url">
-            </el-carousel-item>
-        </el-carousel>
-        <div class="blog_items">
-            <h2>Recent Blogs</h2>
-            <div class="blog_item">
-                <div v-for="item in blogs" :key="item.id">
-                    <h3 class="blog_titles"> {{ item.title }}<span>{{ formatDate(item.published_at) }}</span></h3>
-                    <!-- <hr /> -->
-                </div>
-            </div>
-        </div>
+    <div class="image" v-for="article in articles" :key="article.id">
+        <router-link :to="{ name: 'articleItem', params: { id: article.id } }">
+            <img :src="article.image_url">
+        </router-link>
     </div>
-    <div class="featured_contents_wrapper">
-        <h2>Featured Contents</h2>
-        <div class="featured_contents">
-            <div class="featured_content" v-for="item in featuredContents" :key="item.id">
-                <img class="feature_content_img" :src="item.image_url">
-            </div>
+
+    <div class="blogs">
+        <div class="blog" v-for="blog in blogs" :key="blog.id">
+            <router-link :to="{ name: 'blogsItem', params: { id: blog.id } }">
+                <h2>{{ blog.title }}</h2>
+            </router-link>
+            <p>{{ blog.published_at }}</p>
         </div>
     </div>
 </template>
 
-<script>
-import { onMounted, ref } from 'vue';
-import { useStore } from 'vuex';
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import type { ArticlesState } from '../vuex/articles';
+import type { BlogsState } from '../vuex/blogs'
+import { store } from '../vuex/index';
+import { RouterLink } from "vue-router";
 
-export default {
-    setup() {
-        const store = useStore();
-        const articles = ref([]);
-        const blogs = ref([]);
-        const reports = ref([]);
-        const featuredContents = ref([]);
+const articles = ref<ArticlesState[]>();
+const blogs = ref<BlogsState[]>();
 
-        const formatDate = (dateStr) => {
-            const date = new Date(dateStr);
-            return new Intl.DateTimeFormat('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit'
-            }).format(date);
-        };
+onMounted(async () => {
+    await store.dispatch('articles/fetchData');
+    // console.log(store.state.articles.data)
+    articles.value = store.state.articles.data
+    console.log(articles.value)
 
-        const getRandomFeaturedContents = () => {
-            const combinedResults = [...articles.value, ...blogs.value, ...reports.value];
-            const uniqueImageUrls = new Set();
-            const selectedResults = [];
+    await store.dispatch('blogs/fetchData');
+    blogs.value = store.state.blogs.data;
+    console.log(blogs.value);
 
-            while (uniqueImageUrls.size < 6) {
-                const randomIndex = Math.floor(Math.random() * combinedResults.length);
-                const imageUrl = combinedResults[randomIndex].image_url;
+})
 
-                if (!uniqueImageUrls.has(imageUrl)) {
-                    uniqueImageUrls.add(imageUrl);
-                    selectedResults.push(combinedResults[randomIndex]);
-                }
-            }
-
-            featuredContents.value = selectedResults;
-        };
-
-        onMounted(async () => {
-            await store.dispatch('articles/fetchArticles');
-            articles.value = store.state.articles.articles.results;
-
-            await store.dispatch('blogs/fetchBlogs');
-            blogs.value = store.state.blogs.blogs.results;
-            blogs.value.sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
-
-            await store.dispatch('reports/fetchReports');
-            reports.value = store.state.reports.reports.results;
-
-            getRandomFeaturedContents();
-        });
-
-        return {
-            articles,
-            blogs,
-            reports,
-            featuredContents,
-            formatDate,
-        };
-    }
-};
 </script>
 
-<style scoped>
-.blogsNarticles {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    max-width: 1100px;
-    margin: auto;
-    margin-top: 2.5rem;
-    padding: 1rem;
-}
-
-.article_images {
-    height: 300px;
-    width: 350px;
+<style lang="scss" scoped>
+.image {
+    display: inline;
+    margin: 0;
     cursor: pointer;
-}
 
-.article_image {
-    background-size: cover;
-    height: 300px;
-    width: 350px;
-}
-
-.blog_item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: justify;
-    margin: auto;
-}
-
-.blog_item span {
-    display: block;
-    color: gray;
-    text-align: end;
-    font-size: 16px;
-    font-weight: 200;
-    padding: 10px 6px;
-}
-
-.blog_titles {
-    border: 1px solid lightgray;
-    padding: 10px 32px;
-    cursor: pointer;
-}
-
-.blog_items h2,
-.featured_contents_wrapper h2 {
-    text-align: start;
-    color: crimson;
-    padding-bottom: 1rem;
-    padding-left: 32px;
-    text-align: center;
-    font-weight: 600;
-}
-
-.feature_content_img {
-    height: 300px;
-    width: 300px;
-}
-
-.featured_contents {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-}
-
-@media screen and (max-width: 768px) {
-    .blogsNarticles {
-        flex-wrap: wrap;
+    img {
+        height: 300px;
+        width: 300px;
     }
+}
 
-    .article_image,
-    .article_images {
-        height: 100%;
-        width: 100%;
+.blogs {
+    .blog {
+        padding: 1rem 2rem;
+        border: 1px solid rgb(46, 46, 46);
+
+        a {
+            color: black;
+            text-decoration: none;
+        }
+        p {
+            text-align: end;
+            color: rgb(181, 181, 181);
+        }
     }
 }
 </style>
