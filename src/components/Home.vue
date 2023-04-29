@@ -1,16 +1,20 @@
 <template>
-    <div class="image" v-for="article in articles" :key="article.id">
-        <router-link :to="{ name: 'articleItem', params: { id: article.id } }">
-            <img :src="article.image_url">
-        </router-link>
-    </div>
+    <div class="articlesNblogs">
+        <div class="articlesWrapper">
+            <div class="image" v-for="article in articles" :key="article.id">
+                <router-link :to="{ name: 'articleItem', params: { id: article.id } }">
+                    <img :src="article.image_url">
+                </router-link>
+            </div>
+        </div>
 
-    <div class="blogs">
-        <div class="blog" v-for="blog in blogs" :key="blog.id">
-            <router-link :to="{ name: 'blogsItem', params: { id: blog.id } }">
-                <h2>{{ blog.title }}</h2>
-            </router-link>
-            <p>{{ blog.published_at }}</p>
+        <div class="blogs">
+            <div class="blog" v-for="blog in blogs" :key="blog.id">
+                <router-link :to="{ name: 'blogsItem', params: { id: blog.id } }">
+                    <h2>{{ blog.title }}</h2>
+                </router-link>
+                <p>{{ blog.published_at }}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -40,29 +44,37 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.image {
-    display: inline;
-    margin: 0;
-    cursor: pointer;
+.articlesNblogs {
+    display: flex;
 
-    img {
-        height: 300px;
-        width: 300px;
-    }
-}
+    .articlesWrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
-.blogs {
-    .blog {
-        padding: 1rem 2rem;
-        border: 1px solid rgb(46, 46, 46);
+        .image {
+            margin: 0;
 
-        a {
-            color: black;
-            text-decoration: none;
+            img {
+                height: 300px;
+                width: 300px;
+            }
         }
-        p {
-            text-align: end;
-            color: rgb(181, 181, 181);
+    }
+
+    .blogs {
+        .blog {
+            padding: 1rem 2rem;
+            border: 1px solid rgb(46, 46, 46);
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+
+            p {
+                text-align: end;
+                color: rgb(181, 181, 181);
+            }
         }
     }
 }

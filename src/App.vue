@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-
+import { RouterView } from 'vue-router';
+import Header from './components/Header.vue';
 </script>
 
 <template>
+  <Header></Header>
   <RouterView />
 </template>
 
@@ -16,5 +17,6 @@ import { RouterLink, RouterView } from 'vue-router'
 
   body {
     background: white;
+    font-family: 'Newsreader', serif;
   }
 </style>
