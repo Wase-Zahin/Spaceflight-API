@@ -14,7 +14,7 @@ import { useRoute } from "vue-router";
 import type { ArticleItemState } from '../vuex/articleItem'
 
     const route = useRoute();
-    const articleItem = ref<ArticleItemState[]>();
+    const articleItem = ref<ArticleItemState[]>([]);
 
     onMounted(async () => {
         await store.dispatch('ArticleItem/fetchData', route.params.id);

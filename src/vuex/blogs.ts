@@ -1,17 +1,21 @@
 import type { Module } from "vuex";
 
 export interface BlogsState {
-    data: any[],
+    id: string,
+    title: string,
+    published_at: string,
 }
 
 export const blogs: Module<BlogsState, any> = {
     namespaced: true,
     state: () => ({
-        data: []
+        id: '',
+        title: '',
+        published_at: '',
     }),
     mutations: {
-        setBlogs(state: BlogsState, data: []) {
-            state.data = data
+        setBlogs(state: BlogsState, data: BlogsState) {
+            Object.assign(state, data);
         }
     },
     actions: {

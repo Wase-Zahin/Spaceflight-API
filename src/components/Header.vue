@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-// import Fold from '~icons/ep/fold'
+import Fold from '~icons/ep/fold'
 
 </script>
 

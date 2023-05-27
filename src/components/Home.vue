@@ -26,19 +26,18 @@ import type { BlogsState } from '../vuex/blogs'
 import { store } from '../vuex/index';
 import { RouterLink } from "vue-router";
 
-const articles = ref<ArticlesState[]>();
-const blogs = ref<BlogsState[]>();
+const articles = ref<ArticlesState[]>([]);
+const blogs = ref<BlogsState[]>([]);
 
 onMounted(async () => {
     await store.dispatch('articles/fetchData');
     // console.log(store.state.articles.data)
-    articles.value = store.state.articles.data
+    articles.value = [store.state.articles]
     console.log(articles.value)
 
     await store.dispatch('blogs/fetchData');
-    blogs.value = store.state.blogs.data;
+    blogs.value = [store.state.blogs];
     console.log(blogs.value);
-
 })
 
 </script>

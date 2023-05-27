@@ -1,18 +1,20 @@
 import type { Module } from "vuex";
 
 export interface ArticlesState {
-    data: any[],
+    id: string,
+    image_url: string,
 }
 
 export const articles: Module<ArticlesState, any> = {
     namespaced: true,
     state: {
-        data: []
+        id: '',
+        image_url: '',
     },
 
     mutations: {
-        setArticles(state: ArticlesState, data: []) {
-            state.data = data;
+        setArticles(state: ArticlesState, data: ArticlesState) {
+            Object.assign(state, data);
         }
     },
 

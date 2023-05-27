@@ -14,7 +14,7 @@ import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
     const route = useRoute();
-    const blogsItem = ref<BlogsItemState[]>();
+    const blogsItem = ref<BlogsItemState[]>([]);
 
     onMounted(async () => {
         await store.dispatch('BlogsItem/fetchData', route.params.id);
